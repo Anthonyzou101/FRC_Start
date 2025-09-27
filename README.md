@@ -4,7 +4,7 @@
 
 ### 1. Windows Git - Downloading Package
 
-下载并安装 Windows Git。
+下载并安装 Windows Git：https://git-scm.com/downloads/win
 
 ---
 
