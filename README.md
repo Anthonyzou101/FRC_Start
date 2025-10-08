@@ -70,9 +70,3 @@ git add .
 git commit -m "add .gitignore file"
 git push origin main # 提交修改
 ```
-
-Setting up Android Studio and Github | FTC 16441 Pretty Smart Robotics
- 
-Java download: Java Downloads | Oracle
-Andoird Studio download: Download Android Studio & App Tools - Android Developers
-FTC Robot Control: FIRST Robotics Competition Control System — FIRST Robotics Competition documentation
