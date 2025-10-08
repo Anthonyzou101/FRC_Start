@@ -8,130 +8,122 @@ git clone --recurse-submodule https://github.com/ZodiacEFZ/2025-Swerve.git
 ```
 ---
 
-### 2. ¹Ø¼üÎÄ¼þÓë×÷ÓÃ£¨¿ìËÙÇåµ¥£©
+### 2. å…³é”®æ–‡ä»¶ä¸Žä½œç”¨ï¼ˆå¿«é€Ÿæ¸…å•ï¼‰
 
-Main.java£º³ÌÐòÈë¿Ú£¬µ÷ÓÃ RobotBase.startRobot(Robot::new) Æô¶¯»úÆ÷ÈË¡£
-Robot.java£º¼Ì³Ð TimedRobot£¬ÊµÏÖ»úÆ÷ÈËÉúÃüÖÜÆÚ»Øµ÷£¨init/periodic for disabled/auto/teleop/test£©£¬¸ºÔðÈ«¾Öµ÷¶È¡¢LED¡¢ÒôÀÖÓë¸ß²ãÄ£Ê½ÇÐ»»ÐÐÎª¡£
-RobotContainer.java£º»úÆ÷ÈËÈÝÆ÷£¬´´½¨²¢ÅäÖÃ×ÓÏµÍ³£¨swerve¡¢arm¡¢intake¡¢climber¡¢limelight µÈ£©¡¢PathPlanner¡¢°´Å¥Ó³Éä¡¢Ä¬ÈÏÃüÁî¡¢×Ô¶¯Ñ¡ÔñÆ÷£¨Auto Chooser£©¡£
-Constants.java£º³£Á¿£¨µ±Ç°½ö°üº¬Ò»Ïî arm ¹ì¼£Õ¼Î»£©¡£
-ÆäËü£¨ÔÚ libzodiac ÏÂ£©£ºÇý¶¯¿â¡¢Ó²¼þ³éÏó¡¢swerve ÊµÏÖ¡¢PathPlanner ¼¯³É¡¢LED ÓëÒôÀÖÇý¶¯µÈ¡£
-
----
-
-### 3. Ö÷º¯Êý£¨Æô¶¯µ½ÔËÐÐ£©×ÜÌåÁ÷³Ì£¨Öð²½£©
-
-1. JVM Æô¶¯ºóÖ´ÐÐ Main.main£ºµ÷ÓÃ RobotBase.startRobot(Robot::new)£¬ÓÉ WPILib ¿ò¼Ü´´½¨ Robot ÊµÀý²¢½øÈëÔËÐÐÑ­»·¡£
-2. Robot ¹¹Ôìº¯Êý£º
-    ´´½¨ RobotContainer£¨ËùÓÐ×ÓÏµÍ³¡¢ÃüÁî¡¢°´Å¥Ó³ÉäÔÚÕâÀï³õÊ¼»¯£©¡£
-    ³õÊ¼»¯¶¨Ê±Æ÷¡¢LED ¿ØÖÆÆ÷£¨LEDController.initInstance ²¢×¢²á LED Çø¼ä£©¡£
-3. Driver Station Á¬½ÓÊÂ¼þ driverStationConnected()£º
-    ¼ÓÔØ²¢²¥·ÅÒôÀÖÎÄ¼þ£¨SuperMarioFlag-3.chrp£©¡£
-    ¿ØÖÆÆ÷¶Ì´ÙÕð¶¯ÌáÊ¾ÒÑÁ¬½Ó¡£
-4. »úÆ÷ÈËÖÜÆÚÐÔÑ­»· robotPeriodic()£¨Ã¿ 20ms£©£º
-    µ÷ÓÃ CommandScheduler.getInstance().run() ¡ª¡ª ¸ºÔðÃüÁîµ÷¶È¡¢°´Å¥ÂÖÑ¯Óë×ÓÏµÍ³ periodic()¡£
-    Ã¿ 5 Ãë´¥·¢Ò»´Î System.gc()£¨À¬»ø»ØÊÕ£©¡£
-    ½« RobotContainer ·¢ËÍµ½ SmartDashboard¡£
-5. Disabled Ä£Ê½£º
-    disabledInit()£ºµ÷ÓÃ bot.brake()£¨×ÓÏµÍ³Í£Ö¹/ÖÆ¶¯£©¡¢Æô¶¯ disabledTimer¡£
-    disabledPeriodic()£º1 Ãëºóµ÷ÓÃ bot.shutdown()£»³ÖÐøÓÃ LED ÏÔÊ¾ÁªÃËÑÕÉ«£¨ºì»òÀ¶£©²¢×öºôÎüÐ§¹û¡£
-6. Autonomous Ä£Ê½£º
-    autonomousInit()£ºÍ£Ö¹ÒôÀÖ£¬ÖÆ¶¯»úÆ÷ÈË£¬»ñÈ¡ RobotContainer.getAutonomousCommand()£¨À´×Ô PathPlanner µÄ chooser£©£¬Èô·Ç¿ÕÔòµ÷¶È¸ÃÃüÁî¡£
-7. Teleop Ä£Ê½£º
-    teleopInit()£ºÈ¡Ïû×Ô¶¯ÃüÁî£¨ÈôÈÔÔÚÔËÐÐ£©£¬Í£Ö¹ÒôÀÖ£¬ÇÐ»»µ½ÊÖ¶¯¿ØÖÆÄ£Ê½¡£
-8. Test Ä£Ê½£º
-    testInit()£ºÍ£Ö¹ÒôÀÖ£¬²¢È¡ÏûËùÓÐÕýÔÚÔËÐÐµÄÃüÁî£¨CommandScheduler.cancelAll()£©¡£
+1. Main.javaï¼šç¨‹åºå…¥å£ï¼Œè°ƒç”¨ RobotBase.startRobot(Robot::new) å¯åŠ¨æœºå™¨äººã€‚
+2. Robot.javaï¼šç»§æ‰¿ TimedRobotï¼Œå®žçŽ°æœºå™¨äººç”Ÿå‘½å‘¨æœŸå›žè°ƒï¼ˆinit/periodic for disabled/auto/teleop/testï¼‰ï¼Œè´Ÿè´£å…¨å±€è°ƒåº¦ã€LEDã€éŸ³ä¹ä¸Žé«˜å±‚æ¨¡å¼åˆ‡æ¢è¡Œä¸ºã€‚
+3. RobotContainer.javaï¼šæœºå™¨äººå®¹å™¨ï¼Œåˆ›å»ºå¹¶é…ç½®å­ç³»ç»Ÿï¼ˆswerveã€armã€intakeã€climberã€limelight ç­‰ï¼‰ã€PathPlannerã€æŒ‰é’®æ˜ å°„ã€é»˜è®¤å‘½ä»¤ã€è‡ªåŠ¨é€‰æ‹©å™¨ï¼ˆAuto Chooserï¼‰ã€‚
+4. Constants.javaï¼šå¸¸é‡ï¼ˆå½“å‰ä»…åŒ…å«ä¸€é¡¹ arm è½¨è¿¹å ä½ï¼‰ã€‚
+5. å…¶å®ƒï¼ˆåœ¨ libzodiac ä¸‹ï¼‰ï¼šé©±åŠ¨åº“ã€ç¡¬ä»¶æŠ½è±¡ã€swerve å®žçŽ°ã€PathPlanner é›†æˆã€LED ä¸ŽéŸ³ä¹é©±åŠ¨ç­‰ã€‚
 
 ---
 
-### 4. ÔÚ RobotContainer ÖÐ·¢ÉúµÄÖ÷Òª³õÊ¼»¯£¨Òªµã£©
+### 3. ä¸»å‡½æ•°ï¼ˆå¯åŠ¨åˆ°è¿è¡Œï¼‰æ€»ä½“æµç¨‹ï¼ˆé€æ­¥ï¼‰
 
-1. swerve Çý¶¯´´½¨£º
-    ÏîÄ¿Ê¹ÓÃ TalonFXSwerve£¨»ò¿ÉÑ¡ CTRESwerve£©£¬ÅäÖÃ¸÷¸öÄ£¿éµÄ CAN id¡¢±àÂëÆ÷¡¢PID£¨½Ç¶È/Çý¶¯£©¡¢³Ý±È¡¢ÂÖ°ë¾¶¡¢³õÊ¼Î»×ËµÈ¡£
-    ´´½¨ PathPlanner ÊµÀý²¢´«ÈëÇý¶¯ÓëÔ¼Êø¡£
-2. Ä¬ÈÏÃüÁî£º
-    Çý¶¯£º»ùÓÚ Translation2dSupplier£¨×óÒ¡¸Ë£©Óë Rotation2dSupplier£¨ÓÒÒ¡¸Ë£©¹¹ÔìÁ½ÀàÊäÈëÁ÷£¨½ÇËÙ¶È¿ØÖÆÓëÖ±½Ó½Ç¶È¿ØÖÆ£©£¬²¢½«ÓÉÇý¶¯Ìá¹©µÄÄ¬ÈÏÇý¶¯ÃüÁîÉèÖÃÎªµ±Ç°Ä¬ÈÏÃüÁî¡£
-    ÅÀÉýÆ÷£¨Climber£©£ºÄ¬ÈÏÊ¹ÓÃ operator ×óÒ¡¸Ë Y ¿ØÖÆ£¨getClimberOperationCommand£©¡£
-3. °´Å¥-ÃüÁîÓ³Éä£º
-    Ê¹ÓÃ CommandXboxController£¨driver¡¢operator£©²¢Í¨¹ý onTrue/onFalse/onChange ½«°´¼üÓ³Éäµ½ÊÖ±Û¶¯×÷£¨ArmStage2 µÄÒ»ÏµÁÐÃüÁî£©¡¢½ø¸ø/³öÇò£¨Intake£©¡¢ÇÐ»» field-centric / direct-angle / slow-mode / zero heading¡¢climber ÇÐ»»µÈ¡£
-4. ÊÓ¾õÓë´«¸ÐÆ÷£º
-    ³õÊ¼»¯ Limelight£¬ÉèÖÃÓÐÐ§ ID¡¢Ä¬ÈÏ pipeline£¬²¢½«ÆäºÍ swerve ¹ØÁª¡£
-5. ÆäËû£º
-    ´´½¨²¢·ÅÈë SendableChooser£¨À´×Ô PathPlanner£©µ½ SmartDashboard ÒÔ¹©±ÈÈüÑ¡Ôñ×Ô¶¯³ÌÐò¡£
-    ¿ªÆôÉãÏñÍ·²É¼¯£¨CameraServer.startAutomaticCapture()£©¡£
-    ½«»úÆ÷ÈËÉÏµÄËùÓÐ TalonFX µç»ú¼¯ºÏ´«¸ø MusicPlayer£¬¿ÉÓÃµç»ú²¥·ÅÒô·û£¨TalonFX ÒôÀÖ£©¡£
-
----
-
-### 5. Ö÷Òª×ÓÏµÍ³ÓëÖ°Ôð£¨¼ò¶ÌËµÃ÷£©
-
-1. SwerveDrivetrain£¨TalonFXSwerve / CTRESwerve£©£º
-    ËÄÇý swerve Ä£¿é¿ØÖÆ£¬Ìá¹© field-centric¡¢direct-angle¡¢slow-mode¡¢Áã¶¨Î»¡¢Â·¾¶¸ú×Ù£¨PathPlanner£©µÈ¹¦ÄÜ¡£
-2. Arm / ArmStage2£º
-    ¸ºÔð»úÐµ±Û¶¨Î»¡¢×¥È¡/·ÅÏÂ¶¯×÷¡¢¶à¸öÔ¤ÉèÎ»ÖÃ£¨L1/L2/L3/L4 µÈ£©¡¢Ðý×ª×ËÌ¬ÃüÁî¡£
-3. Intake£º
-    ¿ØÖÆ½øÇò/³öÇò¼°Í£Ö¹ÃüÁî¡£
-4. Climber£º
-    ÅÀÉýÂß¼­ÓëÊÖ¶¯¿ØÖÆ½Ó¿Ú¡£
-5. Limelight£º
-    ÊÓ¾õÄ¿±ê¼ì²âÖ§³Ö£¬ÓëÇý¶¯»ò×Ô¶¯»¯¶ÔÆëÅäºÏ¡£
-6. TalonFXMotor.MusicPlayer£º
-    ÀûÓÃµç»ú·¢Éù²¥·ÅÔ¤ÖÃÒôÀÖÎÄ¼þ£¨chrp£©¡£
-7. LEDController£º
-    ¿ØÖÆ»úÌå LED ÇøÓò£¬ÏÔÊ¾ÁªÃËÑÕÉ«ÓëÐ§¹û¡£
+1. JVM å¯åŠ¨åŽæ‰§è¡Œ Main.mainï¼šè°ƒç”¨ RobotBase.startRobot(Robot::new)ï¼Œç”± WPILib æ¡†æž¶åˆ›å»º Robot å®žä¾‹å¹¶è¿›å…¥è¿è¡Œå¾ªçŽ¯ã€‚
+2. Robot æž„é€ å‡½æ•°ï¼š
+    åˆ›å»º RobotContainerï¼ˆæ‰€æœ‰å­ç³»ç»Ÿã€å‘½ä»¤ã€æŒ‰é’®æ˜ å°„åœ¨è¿™é‡Œåˆå§‹åŒ–ï¼‰ã€‚
+    åˆå§‹åŒ–å®šæ—¶å™¨ã€LED æŽ§åˆ¶å™¨ï¼ˆLEDController.initInstance å¹¶æ³¨å†Œ LED åŒºé—´ï¼‰ã€‚
+3. Driver Station è¿žæŽ¥äº‹ä»¶ driverStationConnected()ï¼š
+    åŠ è½½å¹¶æ’­æ”¾éŸ³ä¹æ–‡ä»¶ï¼ˆSuperMarioFlag-3.chrpï¼‰ã€‚
+    æŽ§åˆ¶å™¨çŸ­ä¿ƒéœ‡åŠ¨æç¤ºå·²è¿žæŽ¥ã€‚
+4. æœºå™¨äººå‘¨æœŸæ€§å¾ªçŽ¯ robotPeriodic()ï¼ˆæ¯ 20msï¼‰ï¼š
+    è°ƒç”¨ CommandScheduler.getInstance().run() â€”â€” è´Ÿè´£å‘½ä»¤è°ƒåº¦ã€æŒ‰é’®è½®è¯¢ä¸Žå­ç³»ç»Ÿ periodic()ã€‚
+    æ¯ 5 ç§’è§¦å‘ä¸€æ¬¡ System.gc()ï¼ˆåžƒåœ¾å›žæ”¶ï¼‰ã€‚
+    å°† RobotContainer å‘é€åˆ° SmartDashboardã€‚
+5. Disabled æ¨¡å¼ï¼š
+    disabledInit()ï¼šè°ƒç”¨ bot.brake()ï¼ˆå­ç³»ç»Ÿåœæ­¢/åˆ¶åŠ¨ï¼‰ã€å¯åŠ¨ disabledTimerã€‚
+    disabledPeriodic()ï¼š1 ç§’åŽè°ƒç”¨ bot.shutdown()ï¼›æŒç»­ç”¨ LED æ˜¾ç¤ºè”ç›Ÿé¢œè‰²ï¼ˆçº¢æˆ–è“ï¼‰å¹¶åšå‘¼å¸æ•ˆæžœã€‚
+6. Autonomous æ¨¡å¼ï¼š
+    autonomousInit()ï¼šåœæ­¢éŸ³ä¹ï¼Œåˆ¶åŠ¨æœºå™¨äººï¼ŒèŽ·å– RobotContainer.getAutonomousCommand()ï¼ˆæ¥è‡ª PathPlanner çš„ chooserï¼‰ï¼Œè‹¥éžç©ºåˆ™è°ƒåº¦è¯¥å‘½ä»¤ã€‚
+7. Teleop æ¨¡å¼ï¼š
+    teleopInit()ï¼šå–æ¶ˆè‡ªåŠ¨å‘½ä»¤ï¼ˆè‹¥ä»åœ¨è¿è¡Œï¼‰ï¼Œåœæ­¢éŸ³ä¹ï¼Œåˆ‡æ¢åˆ°æ‰‹åŠ¨æŽ§åˆ¶æ¨¡å¼ã€‚
+8. Test æ¨¡å¼ï¼š
+    testInit()ï¼šåœæ­¢éŸ³ä¹ï¼Œå¹¶å–æ¶ˆæ‰€æœ‰æ­£åœ¨è¿è¡Œçš„å‘½ä»¤ï¼ˆCommandScheduler.cancelAll()ï¼‰ã€‚
 
 ---
 
----
+### 4. åœ¨ RobotContainer ä¸­å‘ç”Ÿçš„ä¸»è¦åˆå§‹åŒ–ï¼ˆè¦ç‚¹ï¼‰
 
-### 6. ÃüÁîµ÷¶ÈÓëÄ¬ÈÏÃüÁîÐÐÎª£¨Òªµã£©
-1. CommandScheduler.run() ÔÚ robotPeriodic() ÖÐ±»µ÷ÓÃ£¬¸ºÔð£º
-    ÂÖÑ¯°´Å¥ÊÂ¼þ£¨onTrue/onFalse/onChange£©¡£
-    µ÷¶ÈºÍÖ´ÐÐÃüÁî£¬µ÷ÓÃ×ÓÏµÍ³µÄ periodic()¡£
-2. Ä¬ÈÏÃüÁî£º
-    Èç¹ûÃ»ÓÐÆäËûÃüÁîÕ¼ÓÃ×ÓÏµÍ³£¬Çý¶¯»áÎ¬³ÖÄ¬ÈÏ¼ÝÊ»ÃüÁî£¨¶ÁÈ¡ÊÖ±úÊäÈë£©¡£
-    Climber Ò²ÓÐÄ¬ÈÏ¡°²Ù×÷¡±ÃüÁîÒÔÏìÓ¦Ò¡¸ËÊäÈë¡£
-3. ×Ô¶¯ÃüÁîÀ´×Ô PathPlanner µÄ chooser£¬Í¨¹ý getAutonomousCommand() ·µ»Ø²¢ÔÚ autonomousInit() ÖÐµ÷¶È¡£
-
----
-
----
-
-### 7. µäÐÍÔËÐÐÂ·¾¶Ê¾Àý£¨´ÓÉÏµçµ½ teleop£©
-1. ÉÏµç -> Main.main() -> Æô¶¯ Robot ÊµÀý¡£
-2. Robot() ¹¹Ôì£º´´½¨ RobotContainer¡¢³õÊ¼»¯Ó²¼þ¡¢ÉèÖÃÄ¬ÈÏÃüÁî¡¢°´Å¥°ó¶¨¡¢PathPlanner¡¢ÉãÏñÍ·¡¢ÒôÀÖÏµÍ³µÈ¡£
-3. Driver Station Á¬½Ó -> ²¥·ÅÁ¬½ÓÌáÊ¾ÒôÀÖ²¢Õð¶¯¿ØÖÆÆ÷¡£
-4. ±ÈÈü¿ªÊ¼£¨Autonomous£©£º
-    autonomousInit() µ÷ÓÃÑ¡ÖÐµÄ×Ô¶¯ÃüÁî²¢Ö´ÐÐ£¨Í¨³£ÊÇ PathPlanner Â·¾¶¸ú×ÙÃüÁî£©¡£
-5. ×Ô¶¯½áÊø»ò±»´ò¶Ï -> ½øÈë Teleop£º
-    teleopInit() È¡Ïû×Ô¶¯ÃüÁî£¬Driver/Operator ¿ÉÒÔÍ¨¹ý°´¼ü/Ò¡¸Ë¿ØÖÆ swerve¡¢arm¡¢intake¡¢climber¡£
-6. Disabled Ä£Ê½ÏÂ»á brake/shutdown ²¢Í¨¹ý LED ÏÔÊ¾ÁªÃËÑÕÉ«¡£¡£
+1. swerve é©±åŠ¨åˆ›å»ºï¼š
+    é¡¹ç›®ä½¿ç”¨ TalonFXSwerveï¼ˆæˆ–å¯é€‰ CTRESwerveï¼‰ï¼Œé…ç½®å„ä¸ªæ¨¡å—çš„ CAN idã€ç¼–ç å™¨ã€PIDï¼ˆè§’åº¦/é©±åŠ¨ï¼‰ã€é½¿æ¯”ã€è½®åŠå¾„ã€åˆå§‹ä½å§¿ç­‰ã€‚
+    åˆ›å»º PathPlanner å®žä¾‹å¹¶ä¼ å…¥é©±åŠ¨ä¸Žçº¦æŸã€‚
+2. é»˜è®¤å‘½ä»¤ï¼š
+    é©±åŠ¨ï¼šåŸºäºŽ Translation2dSupplierï¼ˆå·¦æ‘‡æ†ï¼‰ä¸Ž Rotation2dSupplierï¼ˆå³æ‘‡æ†ï¼‰æž„é€ ä¸¤ç±»è¾“å…¥æµï¼ˆè§’é€Ÿåº¦æŽ§åˆ¶ä¸Žç›´æŽ¥è§’åº¦æŽ§åˆ¶ï¼‰ï¼Œå¹¶å°†ç”±é©±åŠ¨æä¾›çš„é»˜è®¤é©±åŠ¨å‘½ä»¤è®¾ç½®ä¸ºå½“å‰é»˜è®¤å‘½ä»¤ã€‚
+    çˆ¬å‡å™¨ï¼ˆClimberï¼‰ï¼šé»˜è®¤ä½¿ç”¨ operator å·¦æ‘‡æ† Y æŽ§åˆ¶ï¼ˆgetClimberOperationCommandï¼‰ã€‚
+3. æŒ‰é’®-å‘½ä»¤æ˜ å°„ï¼š
+    ä½¿ç”¨ CommandXboxControllerï¼ˆdriverã€operatorï¼‰å¹¶é€šè¿‡ onTrue/onFalse/onChange å°†æŒ‰é”®æ˜ å°„åˆ°æ‰‹è‡‚åŠ¨ä½œï¼ˆArmStage2 çš„ä¸€ç³»åˆ—å‘½ä»¤ï¼‰ã€è¿›ç»™/å‡ºçƒï¼ˆIntakeï¼‰ã€åˆ‡æ¢ field-centric / direct-angle / slow-mode / zero headingã€climber åˆ‡æ¢ç­‰ã€‚
+4. è§†è§‰ä¸Žä¼ æ„Ÿå™¨ï¼š
+    åˆå§‹åŒ– Limelightï¼Œè®¾ç½®æœ‰æ•ˆ IDã€é»˜è®¤ pipelineï¼Œå¹¶å°†å…¶å’Œ swerve å…³è”ã€‚
+5. å…¶ä»–ï¼š
+    åˆ›å»ºå¹¶æ”¾å…¥ SendableChooserï¼ˆæ¥è‡ª PathPlannerï¼‰åˆ° SmartDashboard ä»¥ä¾›æ¯”èµ›é€‰æ‹©è‡ªåŠ¨ç¨‹åºã€‚
+    å¼€å¯æ‘„åƒå¤´é‡‡é›†ï¼ˆCameraServer.startAutomaticCapture()ï¼‰ã€‚
+    å°†æœºå™¨äººä¸Šçš„æ‰€æœ‰ TalonFX ç”µæœºé›†åˆä¼ ç»™ MusicPlayerï¼Œå¯ç”¨ç”µæœºæ’­æ”¾éŸ³ç¬¦ï¼ˆTalonFX éŸ³ä¹ï¼‰ã€‚
 
 ---
 
+### 5. ä¸»è¦å­ç³»ç»Ÿä¸ŽèŒè´£ï¼ˆç®€çŸ­è¯´æ˜Žï¼‰
+
+1. SwerveDrivetrainï¼ˆTalonFXSwerve / CTRESwerveï¼‰ï¼š
+    å››é©± swerve æ¨¡å—æŽ§åˆ¶ï¼Œæä¾› field-centricã€direct-angleã€slow-modeã€é›¶å®šä½ã€è·¯å¾„è·Ÿè¸ªï¼ˆPathPlannerï¼‰ç­‰åŠŸèƒ½ã€‚
+2. Arm / ArmStage2ï¼š
+    è´Ÿè´£æœºæ¢°è‡‚å®šä½ã€æŠ“å–/æ”¾ä¸‹åŠ¨ä½œã€å¤šä¸ªé¢„è®¾ä½ç½®ï¼ˆL1/L2/L3/L4 ç­‰ï¼‰ã€æ—‹è½¬å§¿æ€å‘½ä»¤ã€‚
+3. Intakeï¼š
+    æŽ§åˆ¶è¿›çƒ/å‡ºçƒåŠåœæ­¢å‘½ä»¤ã€‚
+4. Climberï¼š
+    çˆ¬å‡é€»è¾‘ä¸Žæ‰‹åŠ¨æŽ§åˆ¶æŽ¥å£ã€‚
+5. Limelightï¼š
+    è§†è§‰ç›®æ ‡æ£€æµ‹æ”¯æŒï¼Œä¸Žé©±åŠ¨æˆ–è‡ªåŠ¨åŒ–å¯¹é½é…åˆã€‚
+6. TalonFXMotor.MusicPlayerï¼š
+    åˆ©ç”¨ç”µæœºå‘å£°æ’­æ”¾é¢„ç½®éŸ³ä¹æ–‡ä»¶ï¼ˆchrpï¼‰ã€‚
+7. LEDControllerï¼š
+    æŽ§åˆ¶æœºä½“ LED åŒºåŸŸï¼Œæ˜¾ç¤ºè”ç›Ÿé¢œè‰²ä¸Žæ•ˆæžœã€‚
+
 ---
 
-### 7. µäÐÍÔËÐÐÂ·¾¶Ê¾Àý£¨´ÓÉÏµçµ½ teleop£©
-
-1. ¿ÉÄÜµÄ×¢Òâµã / ±ß½çÇé¿ö
-2. ×Ô¶¯ÃüÁîÈ¡Ïû£ºteleopInit() »áÈ¡Ïû×Ô¶¯ÃüÁî£¬ÈôÏ£Íû×Ô¶¯³ÖÐøÖ±µ½±»Ã÷È·ÖÐ¶ÏÐèÐÞ¸Ä´Ë´¦¡£
-3. System.gc()£º´úÂëÃ¿ 5 Ãëµ÷ÓÃÒ»´Î GC£¬¿ÉÄÜÓ°ÏìÊµÊ±ÐÔÄÜ£¨Í¨³£¶ÌÆÚÓ°ÏìÐ¡£¬µ«×¢ÒâÔÚÊµÊ±¿ØÖÆÏÂ²»ÍÆ¼öÆµ·±Ç¿ÖÆ GC£©¡£
-4. ´«¸ÐÆ÷/±àÂëÆ÷Ð£×¼£ºTalonFXSwerve Ä£¿é¶Ô±àÂëÆ÷ÏàÎ»/±ÈÀýÒò×ÓÓë PID ÒÀÀµ½ÏÇ¿£¬ÐèÔÚÊµ³µÉÏµ÷²Î£¨×¢ÊÍÖÐÒ²Ìáµ½ TODO£©¡£
-5. disabledPeriodic() ÔÚ 1s ºóµ÷ÓÃ shutdown()£ºÈç¹ûÔÚ½ûÓÃÆÚ¼äÐèÒªÔÚ¸ü¶ÌÊ±¼ä°²È«¶Ïµç»ò±£ÎÂ£¬Òª×¢Òâ¸ÃÑÓÊ±¡£
-6. PathPlanner ³õÊ¼Î»×ËÒÀÀµ£º¹¹ÔìÖÐ³õÊ¼ pose Áô¿Õ£¨ÓÃ PathPlanner ÔÚÔËÐÐÊ±ÉèÖÃ£©£¬È·±£Ñ¡µÄ×Ô¶¯Â·¾¶Ìá¹©ÕýÈ·ÆðÊ¼Î»×Ë¡£
-7. ¶àÉè±¸µÄ CAN ID / ¶Ë¿ÚÐèÓëÕæÊµÓ²¼þÆ¥Åä£¨´úÂëÖÐ¶à¸öÓ²¼þ ID ÒÑÏÔÊ½Ð´³ö£©¡£
-
----
+### 6. å‘½ä»¤è°ƒåº¦ä¸Žé»˜è®¤å‘½ä»¤è¡Œä¸ºï¼ˆè¦ç‚¹ï¼‰
+1. CommandScheduler.run() åœ¨ robotPeriodic() ä¸­è¢«è°ƒç”¨ï¼Œè´Ÿè´£ï¼š
+    è½®è¯¢æŒ‰é’®äº‹ä»¶ï¼ˆonTrue/onFalse/onChangeï¼‰ã€‚
+    è°ƒåº¦å’Œæ‰§è¡Œå‘½ä»¤ï¼Œè°ƒç”¨å­ç³»ç»Ÿçš„ periodic()ã€‚
+2. é»˜è®¤å‘½ä»¤ï¼š
+    å¦‚æžœæ²¡æœ‰å…¶ä»–å‘½ä»¤å ç”¨å­ç³»ç»Ÿï¼Œé©±åŠ¨ä¼šç»´æŒé»˜è®¤é©¾é©¶å‘½ä»¤ï¼ˆè¯»å–æ‰‹æŸ„è¾“å…¥ï¼‰ã€‚
+    Climber ä¹Ÿæœ‰é»˜è®¤â€œæ“ä½œâ€å‘½ä»¤ä»¥å“åº”æ‘‡æ†è¾“å…¥ã€‚
+3. è‡ªåŠ¨å‘½ä»¤æ¥è‡ª PathPlanner çš„ chooserï¼Œé€šè¿‡ getAutonomousCommand() è¿”å›žå¹¶åœ¨ autonomousInit() ä¸­è°ƒåº¦ã€‚
 
 ---
 
-### Ð¡½á£¨½áÂÛÓë½¨Òé£©
+### 7. å…¸åž‹è¿è¡Œè·¯å¾„ç¤ºä¾‹ï¼ˆä»Žä¸Šç”µåˆ° teleopï¼‰
+1. ä¸Šç”µ -> Main.main() -> å¯åŠ¨ Robot å®žä¾‹ã€‚
+2. Robot() æž„é€ ï¼šåˆ›å»º RobotContainerã€åˆå§‹åŒ–ç¡¬ä»¶ã€è®¾ç½®é»˜è®¤å‘½ä»¤ã€æŒ‰é’®ç»‘å®šã€PathPlannerã€æ‘„åƒå¤´ã€éŸ³ä¹ç³»ç»Ÿç­‰ã€‚
+3. Driver Station è¿žæŽ¥ -> æ’­æ”¾è¿žæŽ¥æç¤ºéŸ³ä¹å¹¶éœ‡åŠ¨æŽ§åˆ¶å™¨ã€‚
+4. æ¯”èµ›å¼€å§‹ï¼ˆAutonomousï¼‰ï¼š
+    autonomousInit() è°ƒç”¨é€‰ä¸­çš„è‡ªåŠ¨å‘½ä»¤å¹¶æ‰§è¡Œï¼ˆé€šå¸¸æ˜¯ PathPlanner è·¯å¾„è·Ÿè¸ªå‘½ä»¤ï¼‰ã€‚
+5. è‡ªåŠ¨ç»“æŸæˆ–è¢«æ‰“æ–­ -> è¿›å…¥ Teleopï¼š
+    teleopInit() å–æ¶ˆè‡ªåŠ¨å‘½ä»¤ï¼ŒDriver/Operator å¯ä»¥é€šè¿‡æŒ‰é”®/æ‘‡æ†æŽ§åˆ¶ swerveã€armã€intakeã€climberã€‚
+6. Disabled æ¨¡å¼ä¸‹ä¼š brake/shutdown å¹¶é€šè¿‡ LED æ˜¾ç¤ºè”ç›Ÿé¢œè‰²ã€‚ã€‚
 
-1. ÕâÊÇÒ»¸öµäÐÍµÄ Command-based¡¢ÒÔ swerve Çý¶¯Óë PathPlanner ÎªºËÐÄµÄ FRC ÏîÄ¿£º
-2. Main ¡ú Robot ¹ÜÀíÉúÃüÖÜÆÚ ¡ú RobotContainer ¹¹½¨×ÓÏµÍ³¡¢ÃüÁîÓë¿ØÖÆÆ÷°ó¶¨¡£
-3. ºËÐÄ¹¦ÄÜ£ºËÄÂÖ swerve ¿ØÖÆ£¨field-centric/direct-angle£©¡¢PathPlanner ×Ô¶¯Â·¾¶¡¢Arm/Intake/Climber ÃüÁî»¯¿ØÖÆ¡¢Limelight Ö§³Ö¡¢LED ÓëÒôÀÖ·´À¡¡¢Camera capture¡£
-½¨Òé£¨Ð¡¸Ä½ø£©£º
-1. ÔÚÊµ»úÉÏ¶Ô swerve ¸÷Ä£¿é PID Óë±àÂëÆ÷±ê¶È×öÏµÍ³»¯Ð£×¼²¢°Ñ³£Êý¼¯ÖÐµ½ TunerConstants£¯Constants¡£
-2. ¿¼ÂÇÒÆ³ý»òÏÞÖÆÇ¿ÖÆ GC£¨»òÔÚ·ÇÊµÊ±Ïß³ÌÉÏ´¦Àí£©ÒÔ±ÜÃâ¿ØÖÆÖÜÆÚ¶¶¶¯¡£
-3. ÔÚ¹Ø¼ü×ÓÏµÍ³£¨ÀýÈç swerve£©Ôö¼Ó¸üÏêÏ¸µÄ telemetry£¨µçÁ÷¡¢´íÎóÂë£©£¬±ãÓÚµ÷ÊÔ±ÈÈüÊ±¹ÊÕÏ¡£
+---
+
+### 7. å…¸åž‹è¿è¡Œè·¯å¾„ç¤ºä¾‹ï¼ˆä»Žä¸Šç”µåˆ° teleopï¼‰
+
+1. å¯èƒ½çš„æ³¨æ„ç‚¹ / è¾¹ç•Œæƒ…å†µ
+2. è‡ªåŠ¨å‘½ä»¤å–æ¶ˆï¼šteleopInit() ä¼šå–æ¶ˆè‡ªåŠ¨å‘½ä»¤ï¼Œè‹¥å¸Œæœ›è‡ªåŠ¨æŒç»­ç›´åˆ°è¢«æ˜Žç¡®ä¸­æ–­éœ€ä¿®æ”¹æ­¤å¤„ã€‚
+3. System.gc()ï¼šä»£ç æ¯ 5 ç§’è°ƒç”¨ä¸€æ¬¡ GCï¼Œå¯èƒ½å½±å“å®žæ—¶æ€§èƒ½ï¼ˆé€šå¸¸çŸ­æœŸå½±å“å°ï¼Œä½†æ³¨æ„åœ¨å®žæ—¶æŽ§åˆ¶ä¸‹ä¸æŽ¨èé¢‘ç¹å¼ºåˆ¶ GCï¼‰ã€‚
+4. ä¼ æ„Ÿå™¨/ç¼–ç å™¨æ ¡å‡†ï¼šTalonFXSwerve æ¨¡å—å¯¹ç¼–ç å™¨ç›¸ä½/æ¯”ä¾‹å› å­ä¸Ž PID ä¾èµ–è¾ƒå¼ºï¼Œéœ€åœ¨å®žè½¦ä¸Šè°ƒå‚ï¼ˆæ³¨é‡Šä¸­ä¹Ÿæåˆ° TODOï¼‰ã€‚
+5. disabledPeriodic() åœ¨ 1s åŽè°ƒç”¨ shutdown()ï¼šå¦‚æžœåœ¨ç¦ç”¨æœŸé—´éœ€è¦åœ¨æ›´çŸ­æ—¶é—´å®‰å…¨æ–­ç”µæˆ–ä¿æ¸©ï¼Œè¦æ³¨æ„è¯¥å»¶æ—¶ã€‚
+6. PathPlanner åˆå§‹ä½å§¿ä¾èµ–ï¼šæž„é€ ä¸­åˆå§‹ pose ç•™ç©ºï¼ˆç”¨ PathPlanner åœ¨è¿è¡Œæ—¶è®¾ç½®ï¼‰ï¼Œç¡®ä¿é€‰çš„è‡ªåŠ¨è·¯å¾„æä¾›æ­£ç¡®èµ·å§‹ä½å§¿ã€‚
+7. å¤šè®¾å¤‡çš„ CAN ID / ç«¯å£éœ€ä¸ŽçœŸå®žç¡¬ä»¶åŒ¹é…ï¼ˆä»£ç ä¸­å¤šä¸ªç¡¬ä»¶ ID å·²æ˜¾å¼å†™å‡ºï¼‰ã€‚
+
+---
+
+### å°ç»“ï¼ˆç»“è®ºä¸Žå»ºè®®ï¼‰
+
+1. è¿™æ˜¯ä¸€ä¸ªå…¸åž‹çš„ Command-basedã€ä»¥ swerve é©±åŠ¨ä¸Ž PathPlanner ä¸ºæ ¸å¿ƒçš„ FRC é¡¹ç›®ï¼š
+2. Main â†’ Robot ç®¡ç†ç”Ÿå‘½å‘¨æœŸ â†’ RobotContainer æž„å»ºå­ç³»ç»Ÿã€å‘½ä»¤ä¸ŽæŽ§åˆ¶å™¨ç»‘å®šã€‚
+3. æ ¸å¿ƒåŠŸèƒ½ï¼šå››è½® swerve æŽ§åˆ¶ï¼ˆfield-centric/direct-angleï¼‰ã€PathPlanner è‡ªåŠ¨è·¯å¾„ã€Arm/Intake/Climber å‘½ä»¤åŒ–æŽ§åˆ¶ã€Limelight æ”¯æŒã€LED ä¸ŽéŸ³ä¹åé¦ˆã€Camera captureã€‚
+å»ºè®®ï¼ˆå°æ”¹è¿›ï¼‰ï¼š
+1. åœ¨å®žæœºä¸Šå¯¹ swerve å„æ¨¡å— PID ä¸Žç¼–ç å™¨æ ‡åº¦åšç³»ç»ŸåŒ–æ ¡å‡†å¹¶æŠŠå¸¸æ•°é›†ä¸­åˆ° TunerConstantsï¼Constantsã€‚
+2. è€ƒè™‘ç§»é™¤æˆ–é™åˆ¶å¼ºåˆ¶ GCï¼ˆæˆ–åœ¨éžå®žæ—¶çº¿ç¨‹ä¸Šå¤„ç†ï¼‰ä»¥é¿å…æŽ§åˆ¶å‘¨æœŸæŠ–åŠ¨ã€‚
+3. åœ¨å…³é”®å­ç³»ç»Ÿï¼ˆä¾‹å¦‚ swerveï¼‰å¢žåŠ æ›´è¯¦ç»†çš„ telemetryï¼ˆç”µæµã€é”™è¯¯ç ï¼‰ï¼Œä¾¿äºŽè°ƒè¯•æ¯”èµ›æ—¶æ•…éšœã€‚
  
 ---
